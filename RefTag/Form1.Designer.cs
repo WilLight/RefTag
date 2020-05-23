@@ -29,20 +29,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.comboBox_view = new System.Windows.Forms.ComboBox();
             this.button_save_configuration = new System.Windows.Forms.Button();
             this.button_choose_folder = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.listBox_tags = new System.Windows.Forms.ListBox();
+            this.listBox_Tags = new System.Windows.Forms.ListBox();
+            this.button_New_Tag = new System.Windows.Forms.Button();
             this.listView_folder = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList_images = new System.Windows.Forms.ImageList(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -56,6 +54,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -119,7 +118,8 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.listBox_tags);
+            this.splitContainer2.Panel1.Controls.Add(this.listBox_Tags);
+            this.splitContainer2.Panel1.Controls.Add(this.button_New_Tag);
             // 
             // splitContainer2.Panel2
             // 
@@ -128,16 +128,25 @@
             this.splitContainer2.SplitterDistance = 266;
             this.splitContainer2.TabIndex = 1;
             // 
-            // listBox_tags
+            // listBox_Tags
             // 
-            this.listBox_tags.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox_tags.FormattingEnabled = true;
-            this.listBox_tags.Location = new System.Drawing.Point(0, 0);
-            this.listBox_tags.MaximumSize = new System.Drawing.Size(260, 0);
-            this.listBox_tags.MinimumSize = new System.Drawing.Size(100, 0);
-            this.listBox_tags.Name = "listBox_tags";
-            this.listBox_tags.Size = new System.Drawing.Size(260, 413);
-            this.listBox_tags.TabIndex = 0;
+            this.listBox_Tags.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox_Tags.FormattingEnabled = true;
+            this.listBox_Tags.Location = new System.Drawing.Point(0, 23);
+            this.listBox_Tags.Name = "listBox_Tags";
+            this.listBox_Tags.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBox_Tags.Size = new System.Drawing.Size(266, 390);
+            this.listBox_Tags.TabIndex = 1;
+            // 
+            // button_New_Tag
+            // 
+            this.button_New_Tag.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button_New_Tag.Location = new System.Drawing.Point(0, 0);
+            this.button_New_Tag.Name = "button_New_Tag";
+            this.button_New_Tag.Size = new System.Drawing.Size(266, 23);
+            this.button_New_Tag.TabIndex = 0;
+            this.button_New_Tag.Text = "New Tag";
+            this.button_New_Tag.UseVisualStyleBackColor = true;
             // 
             // listView_folder
             // 
@@ -147,11 +156,9 @@
             this.columnHeader3});
             this.listView_folder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView_folder.HideSelection = false;
-            this.listView_folder.LargeImageList = this.imageList_images;
             this.listView_folder.Location = new System.Drawing.Point(0, 0);
             this.listView_folder.Name = "listView_folder";
             this.listView_folder.Size = new System.Drawing.Size(530, 413);
-            this.listView_folder.SmallImageList = this.imageList_images;
             this.listView_folder.TabIndex = 0;
             this.listView_folder.UseCompatibleStateImageBehavior = false;
             this.listView_folder.View = System.Windows.Forms.View.Details;
@@ -168,21 +175,9 @@
             // 
             this.columnHeader3.Text = "Last Modified";
             // 
-            // imageList_images
-            // 
-            this.imageList_images.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList_images.ImageSize = new System.Drawing.Size(140, 140);
-            this.imageList_images.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // folderBrowserDialog1
             // 
             this.folderBrowserDialog1.ShowNewFolderButton = false;
-            // 
-            // imageList2
-            // 
-            this.imageList2.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList2.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // Form1
             // 
@@ -207,7 +202,6 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ImageList imageList_images;
         private System.Windows.Forms.Button button_save_configuration;
         private System.Windows.Forms.Button button_choose_folder;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -217,8 +211,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ComboBox comboBox_view;
-        private System.Windows.Forms.ImageList imageList2;
-        private System.Windows.Forms.ListBox listBox_tags;
+        private System.Windows.Forms.ListBox listBox_Tags;
+        private System.Windows.Forms.Button button_New_Tag;
     }
 }
 
