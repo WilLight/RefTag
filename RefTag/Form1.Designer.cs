@@ -31,6 +31,7 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.comboBox_view = new System.Windows.Forms.ComboBox();
+            this.button_load_configuration = new System.Windows.Forms.Button();
             this.button_save_configuration = new System.Windows.Forms.Button();
             this.button_choose_folder = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -41,6 +42,8 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -62,6 +65,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.comboBox_view);
+            this.splitContainer1.Panel1.Controls.Add(this.button_load_configuration);
             this.splitContainer1.Panel1.Controls.Add(this.button_save_configuration);
             this.splitContainer1.Panel1.Controls.Add(this.button_choose_folder);
             // 
@@ -82,12 +86,22 @@
             "Details",
             "Small Icons",
             "Large Icons"});
-            this.comboBox_view.Location = new System.Drawing.Point(217, 0);
+            this.comboBox_view.Location = new System.Drawing.Point(328, 0);
             this.comboBox_view.MaximumSize = new System.Drawing.Size(130, 0);
             this.comboBox_view.MinimumSize = new System.Drawing.Size(10, 0);
             this.comboBox_view.Name = "comboBox_view";
-            this.comboBox_view.Size = new System.Drawing.Size(100, 21);
-            this.comboBox_view.TabIndex = 2;
+            this.comboBox_view.Size = new System.Drawing.Size(106, 21);
+            this.comboBox_view.TabIndex = 5;
+            // 
+            // button_load_configuration
+            // 
+            this.button_load_configuration.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button_load_configuration.Location = new System.Drawing.Point(217, 0);
+            this.button_load_configuration.Name = "button_load_configuration";
+            this.button_load_configuration.Size = new System.Drawing.Size(111, 33);
+            this.button_load_configuration.TabIndex = 2;
+            this.button_load_configuration.Text = "Load Configuration";
+            this.button_load_configuration.UseVisualStyleBackColor = true;
             // 
             // button_save_configuration
             // 
@@ -179,6 +193,21 @@
             // 
             this.folderBrowserDialog1.ShowNewFolderButton = false;
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "txt";
+            this.saveFileDialog1.Filter = "text files|*.txt|All files|*.*";
+            this.saveFileDialog1.FilterIndex = 2;
+            this.saveFileDialog1.RestoreDirectory = true;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "txt";
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "text files|*.txt|All files|*.*";
+            this.openFileDialog1.FilterIndex = 2;
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,9 +239,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ComboBox comboBox_view;
         private System.Windows.Forms.ListBox listBox_Tags;
         private System.Windows.Forms.Button button_New_Tag;
+        private System.Windows.Forms.Button button_load_configuration;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ComboBox comboBox_view;
     }
 }
 
