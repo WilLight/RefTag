@@ -37,6 +37,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.listBox_Tags = new System.Windows.Forms.ListBox();
             this.button_New_Tag = new System.Windows.Forms.Button();
+            this.listBox_Folders = new System.Windows.Forms.ListBox();
+            this.button_Force_Folder_Changes = new System.Windows.Forms.Button();
             this.listView_folder = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -134,6 +136,8 @@
             // 
             this.splitContainer2.Panel1.Controls.Add(this.listBox_Tags);
             this.splitContainer2.Panel1.Controls.Add(this.button_New_Tag);
+            this.splitContainer2.Panel1.Controls.Add(this.listBox_Folders);
+            this.splitContainer2.Panel1.Controls.Add(this.button_Force_Folder_Changes);
             // 
             // splitContainer2.Panel2
             // 
@@ -146,21 +150,41 @@
             // 
             this.listBox_Tags.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox_Tags.FormattingEnabled = true;
-            this.listBox_Tags.Location = new System.Drawing.Point(0, 23);
+            this.listBox_Tags.Location = new System.Drawing.Point(0, 141);
             this.listBox_Tags.Name = "listBox_Tags";
             this.listBox_Tags.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox_Tags.Size = new System.Drawing.Size(266, 390);
-            this.listBox_Tags.TabIndex = 1;
+            this.listBox_Tags.Size = new System.Drawing.Size(266, 272);
+            this.listBox_Tags.TabIndex = 8;
             // 
             // button_New_Tag
             // 
             this.button_New_Tag.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button_New_Tag.Location = new System.Drawing.Point(0, 0);
+            this.button_New_Tag.Location = new System.Drawing.Point(0, 118);
             this.button_New_Tag.Name = "button_New_Tag";
             this.button_New_Tag.Size = new System.Drawing.Size(266, 23);
-            this.button_New_Tag.TabIndex = 0;
+            this.button_New_Tag.TabIndex = 7;
             this.button_New_Tag.Text = "New Tag";
             this.button_New_Tag.UseVisualStyleBackColor = true;
+            // 
+            // listBox_Folders
+            // 
+            this.listBox_Folders.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listBox_Folders.FormattingEnabled = true;
+            this.listBox_Folders.Location = new System.Drawing.Point(0, 23);
+            this.listBox_Folders.Name = "listBox_Folders";
+            this.listBox_Folders.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBox_Folders.Size = new System.Drawing.Size(266, 95);
+            this.listBox_Folders.TabIndex = 6;
+            // 
+            // button_Force_Folder_Changes
+            // 
+            this.button_Force_Folder_Changes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button_Force_Folder_Changes.Location = new System.Drawing.Point(0, 0);
+            this.button_Force_Folder_Changes.Name = "button_Force_Folder_Changes";
+            this.button_Force_Folder_Changes.Size = new System.Drawing.Size(266, 23);
+            this.button_Force_Folder_Changes.TabIndex = 5;
+            this.button_Force_Folder_Changes.Text = "Force Folder Changes";
+            this.button_Force_Folder_Changes.UseVisualStyleBackColor = true;
             // 
             // listView_folder
             // 
@@ -239,12 +263,14 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ListBox listBox_Tags;
-        private System.Windows.Forms.Button button_New_Tag;
         private System.Windows.Forms.Button button_load_configuration;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ComboBox comboBox_view;
+        private System.Windows.Forms.ListBox listBox_Tags;
+        private System.Windows.Forms.Button button_New_Tag;
+        private System.Windows.Forms.ListBox listBox_Folders;
+        private System.Windows.Forms.Button button_Force_Folder_Changes;
     }
 }
 
