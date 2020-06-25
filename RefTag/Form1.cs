@@ -11,8 +11,14 @@ using System.Windows.Forms;
 
 namespace RefTag
 {
+    //! A form object of Windows Forms that contains all UI elements
     public partial class Form1 : Form
     {
+        //! Method to populate a Tag with a given tagName with information from Directory Info
+        /*!
+         \param dirInfo a Directory Info instance to innumerate through directories
+         \param tagName a string name of a Tag object to populate
+         */
         void PopulateTag(DirectoryInfo dirInfo, string tagName)
         {
             foreach (var file in dirInfo.GetFiles())
@@ -26,19 +32,29 @@ namespace RefTag
                 }
             }
         }
-        //A function to add tags to listbox and create dictionary for the said tag
+
+        //! Method that adds tags to listbox and create dictionary for the said tag
+        /*!
+         \param listBox a listBox Windows Forms object
+         \param tagName a string name of a Tag object to create
+         */
         private void ListBoxAddTag(ListBox listBox, string tagName)
         {
             listBox.Items.Add(tagName);
             _session.NewTag(_dirInfo.Name, _dirInfo.FullName);
         }
 
+        //! Method that sets ListView View property if none was selected
         private void ListViewInitialView()
         {
-            //if listView view controller has no option selected, automatically select Large Images
+            //If listView view controller has no option selected, automatically select Large Images
             if (comboBox_view.SelectedIndex == -1) comboBox_view.SelectedIndex = 2;
         }
 
+        //! Method that populates ListView with contents of the selected Tag
+        /*!
+         \param selectedTag a Tag object which contents populate List View
+         */
         private void PopulateListView(Tag selectedTag)
         {
             listView_folder.Items.Clear();
@@ -58,6 +74,14 @@ namespace RefTag
             }
         }
 
+        //! Method that populates Image list with images from folder.
+        /*!
+            This method uses Mutex for maximum efficiency and runs on different thread
+            than ListView, therefore imageList has to be unassigned from ListView before
+            populating it.
+            \param imageList an ImageList object to populate with images
+            \param taggedItems a list of TaggedItem objects with paths to images
+        */
         private void PopulateImageList(ImageList imageList, List<TaggedItem> taggedItems)
         {
             var imageListMutex = new Mutex();
@@ -85,6 +109,7 @@ namespace RefTag
             });
         }
 
+        //! Method that resized an image while maintaining its aspect ratio
         private static Bitmap ResizeImage(Image image, int width, int height)
         {
             float aspectRatio;
@@ -139,7 +164,7 @@ namespace RefTag
         private readonly List<ListViewItem> _listViewItemSelectionList = new List<ListViewItem>();
         private ImageList _imageList = new ImageList {ImageSize = new Size(140, 140)};
 
-        //Event Handlers
+        //! Event Handler for a button to choose a folder
         private void Button_choose_folder_Click(object sender, EventArgs e)
         {
             //Making sure folder browser ended with a selection
@@ -179,6 +204,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for a button to save configuration
         private void Button_save_configuration_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -187,6 +213,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for a button to load configuration
         private void Button_load_configuration_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -211,9 +238,11 @@ namespace RefTag
                 }
                 listView_folder.LargeImageList = _imageList;
                 listView_folder.SmallImageList = _imageList;
+                ListViewInitialView();
             }
         }
 
+        //! Event Handler for a combo box controlling ListView View property
         private void Combo_box_view_change(object sender, EventArgs e)
         {
             switch (comboBox_view.SelectedIndex)
@@ -229,7 +258,7 @@ namespace RefTag
                     break;
             }
         }
-
+        //! Event Handler for a button to confirm changes in folders
         private void Button_Force_Folder_Changes_Click(object sender, EventArgs e)
         {
             List<string> deletionList = new List<string>();
@@ -272,6 +301,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for a button to add a new tag
         private void Button_new_tag_click(object sender, EventArgs e)
         {
             var promptValue = PopupWindows.ShowTextInputDialog("Enter Tag Name", "Add New Tag");
@@ -286,6 +316,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for selection of ListView items
         private void ListView_folder_item_selection(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (e.IsSelected && !_listViewItemSelectionList.Contains(e.Item))
@@ -300,6 +331,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for click events for ListBox of tags
         private void ListBox_Tags_Click_Events(object sender, MouseEventArgs e)
         {
             var tagIndexFromPoint = listBox_Tags.IndexFromPoint(e.Location);
@@ -328,6 +360,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for click events for ListBox of folders
         private void ListBox_Folders_Click_Events(object sender, MouseEventArgs e)
         {
             var tagIndexFromPoint = listBox_Folders.IndexFromPoint(e.Location);
@@ -356,6 +389,7 @@ namespace RefTag
             }
         }
 
+        //! Event Handler for double click event for ListBox of tags
         private void ListBox_Tags_Double_Click(object sender, EventArgs e)
         {
             if (listBox_Tags.SelectedItem != null)
@@ -371,6 +405,7 @@ namespace RefTag
             _listViewItemSelectionList.Clear();
         }
 
+        //! Event Handler for double click event for ListBox of folders
         private void ListBox_Folders_Double_Click(object sender, EventArgs e)
         {
             if (listBox_Folders.SelectedItem != null)
@@ -403,36 +438,62 @@ namespace RefTag
         }
     }
 
+    //! Class for saving the state of the program and relevant data
     public class CurrentSession
     {
+        //! List of Tags created in current session
         public List<Tag> Tags;
+
+        //! Storing the tag which contents have to be shown in list view
         public Tag OpenedTag;
 
+        //! Constructor for CurrentSession
         public CurrentSession()
         {
             Tags = new List<Tag>();
         }
 
+        //! Function that assigns a tag for content viewing
+        /*!
+           \param openedTag a Tag object 
+         */
         public void SetOpenedTag(Tag openedTag)
         {
             OpenedTag = openedTag;
         }
 
+        //! Function to add a newly created tag to the list Tags
+        /*!
+           \param item a Tag object 
+         */
         public void AddTag(Tag item)
         {
             Tags.Add(item);
         }
 
+        //! Function to create a tag from a string
+        /*!
+           \param tagName a string
+         */
         public void NewTag(string tagName)
         {
             AddTag(new Tag(tagName));
         }
 
+        //! Function to create a tag from folder information
+        /*!
+           \param tagName a string
+           \param folderPath a stringed full folder name
+         */
         public void NewTag(string tagName, string folderPath)
         {
             AddTag(new Tag(tagName, folderPath));
         }
 
+        //! Function to remove a tag and its contents
+        /*!
+           \param item a Tag object
+         */
         public void RemoveTag(Tag item)
         {
             Tags.Find(x => x == item).ItemList.Clear();
@@ -440,24 +501,41 @@ namespace RefTag
         }
     }
 
-
+    //! Class for storage of folder or tag information.
     public class Tag
     {
-        public string TagName;
+        //! String for naming a folder or tag
+        public string TagName;  
+
+        //! Bool isFolder is true when Tag was created with a folder path
         public bool IsFolder;
+
+        //! Stringed Folder path to a folder the tag represents
         public string FolderPath;
+
+        //! List of TaggedItems in this tag.
         public List<TaggedItem> ItemList = new List<TaggedItem>();
 
+        //! Empty constructor for JSON serialization
         public Tag()
         {
 
         }
 
+        //! Constructor for tag creation
+        /*!
+            \param tagName a string argument
+         */
         public Tag(string tagName)
         {
             TagName = tagName;
         }
 
+        //! Constructor for folder creation
+        /*!
+            \param tagName a string argument
+            \param folderPath a string argument, which should be a stringed folder path
+         */
         public Tag(string tagName, string folderPath)
         {
             TagName = tagName;
@@ -465,6 +543,10 @@ namespace RefTag
             FolderPath = folderPath;
         }
 
+        //! Function to add TaggedItems to tag from different data structures
+        /*!
+           \param item a TaggedItem object 
+         */
         public void AddToTag(TaggedItem item)
         {
             if (!ItemList.Contains(item))
@@ -473,21 +555,34 @@ namespace RefTag
             }
         }
 
+        /*!
+           \param items an array of TaggedItem objects 
+         */
         public void AddToTag(TaggedItem[] items)
         {
             ItemList.AddRange(items);
         }
 
+        /*!
+           \param items a list of TaggedItem objects 
+         */
         public void AddToTag(List<TaggedItem> items)
         {
             ItemList.AddRange(items);
         }
 
+        //! Overloaded function to remove TaggedItems from tag using different data structures
+        /*!
+           \param item a TaggedItem object 
+         */
         public void RemoveFromTag(TaggedItem item)
         {
             ItemList.Remove(item);
         }
 
+        /*!
+           \param items an array of TaggedItem objects 
+         */
         public void RemoveFromTag(TaggedItem[] items)
         {
             for (int i = 0; i < items.Length; i++)
@@ -496,6 +591,9 @@ namespace RefTag
             }
         }
 
+        /*!
+           \param items a list of TaggedItem objects 
+         */
         public void RemoveFromTag(List<TaggedItem> items)
         {
             for (int i = 0; i < items.Count; i++)
@@ -505,14 +603,28 @@ namespace RefTag
         }
     }
 
+    //! Class for storage of file information
     public class TaggedItem
     {
+        //! File name
         public string ItemName;
+        //! File extension
         public string ItemFileExtension;
+        //! File creation date
         public string ItemCreationDate;
+        //! File modification date
         public string ItemModificationDate;
+        //! Full file name
         public string ItemPath;
 
+        //! A constructor that's uses information from file system
+        /*!
+           \param itemName a string containing a file name
+           \param itemFileExtension a string containing a file extension
+           \param itemCreationDate a string containing a file creation date
+           \param itemModificationDate a string containing a file modification date
+           \param itemPath a string containing a full file name (file path)
+         */
         public TaggedItem(string itemName, string itemFileExtension, string itemCreationDate, string itemModificationDate, string itemPath)
         {
             ItemName = itemName;
@@ -523,10 +635,15 @@ namespace RefTag
         }
     }
 
-
+    //! Class for methods to create popup windows
     public static class PopupWindows
     {
-        //A popup window for writing a new tag
+        //! A universal popup window that's used for writing a new tag
+        /*!
+           \param itemName a string containing a file name
+           \param itemFileExtension a string containing a file extension
+           \return textBox.Text a string containing a name of a new tag
+         */
         public static string ShowTextInputDialog(string text, string caption)
         {
             var prompt = new Form()
@@ -561,6 +678,10 @@ namespace RefTag
             }
         }
 
+        //! A popup warning for duplicate
+        /*!
+           \param text a string with a warning text
+         */
         public static void ShowDuplicateWarning(string text)
         {
             var prompt = new Form()
@@ -582,7 +703,15 @@ namespace RefTag
             prompt.ShowDialog();
         }
 
-        //A context menu for right clicking on tags
+        //! A context menu for right clicking on tags
+        /*!
+           \param listBox a listBox Windows Forms object
+           \param locationPoint a Point struct of x/y integer coordinates
+           \param selectedTag a Tag object on which the context menu was invoked
+           \param openedTag a Tag object currently opened in ListView
+           \param session a Session object
+           \param listViewItems a list of selected ListViewItems
+         */
         public static bool ShowContextMenu(ListBox listBox, Point locationPoint, Tag selectedTag, Tag openedTag,
             CurrentSession session, List<ListViewItem> listViewItems)
         {
@@ -596,20 +725,24 @@ namespace RefTag
             contextMenuStrip.Items.AddRange(new ToolStripItem[]
                 {toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3});
 
-            //First Item: Adding to tag
+            //! First Item: Adding to tag
+            /*!
+                Event Handler of a first element of context menu.
+                transfers information of selected ListViewItems from openedTag to selectedTag
+             */
             void ToolStripMenuItem1Click(object sender, EventArgs e)
             {
-                //Assigning lengthy data to easy to understand variables
+                //! Assigning lengthy data to easy to understand variables
                 var donorTag = openedTag;
                 var receiverTag = selectedTag;
 
-                //Preventing Duplication of taggedItems
+                //! Preventing Duplication of taggedItems
                 if (donorTag != receiverTag)
                 {
                     foreach (var item in listViewItems)
                     {
                         TaggedItem passedItem = donorTag.ItemList.Find(x => x.ItemName == item.Text);
-                        //Adding selected item
+                        //! Adding selected item
                         if (!receiverTag.ItemList.Contains(passedItem))
                         {
                             receiverTag.AddToTag(passedItem);
@@ -619,17 +752,29 @@ namespace RefTag
                 }
             }
 
-            //Second Item: Removing from tag
+            //! Second Item: Removing from tag
+            /*!
+                Event Handler of a second element of context menu.
+                Removes information of selected ListViewItems from selectedTag
+             */
             void ToolStripMenuItem2Click(object sender, EventArgs e)
             {
                 foreach (var item in listViewItems)
                 {
-                    TaggedItem removedItem = openedTag.ItemList.Find(x => x.ItemName == item.Text);
-                    openedTag.RemoveFromTag(removedItem);
+                    TaggedItem removedItem = selectedTag.ItemList.FirstOrDefault(x => x.ItemName == item.Text);
+                    if (removedItem != null)
+                    {
+                        selectedTag.RemoveFromTag(removedItem);
+                    }
+                    
                 }
             }
 
             //Third Item: Removing tag
+            /*!
+                Event Handler of a second element of context menu.
+                Removes selectedTag
+             */
             void ToolStripMenuItem3Click(object sender, EventArgs e)
             {
                 session.RemoveTag(selectedTag);
@@ -641,7 +786,7 @@ namespace RefTag
             return true;
         }
 
-
+        //! Overload of previous function for an empty tag
         public static bool ShowContextMenu(ListBox listBox, Point locationPoint, Tag selectedTag,
             CurrentSession session, List<ListViewItem> listViewItems)
         {
@@ -650,7 +795,7 @@ namespace RefTag
             var contextMenuStrip = new ContextMenuStrip();
             contextMenuStrip.Items.AddRange(new ToolStripItem[] {toolStripMenuItem3});
 
-            //First and only item: Removing tag
+            //! First and only item: Removing tag
             void ToolStripMenuItem3Click(object sender, EventArgs e)
             {
                 session.RemoveTag(selectedTag);
@@ -663,9 +808,19 @@ namespace RefTag
         }
     }
 
-
+    //! Json Serializer for saving and loading current configuration to and from a notepad file
+    /*!
+        Requires an installation of Newtonsoft Json Serializer
+    */
     public static class JsonSerialization
     {
+        //! A method to save information as a notepad file
+        /*!
+            \param filePath a string of a target file
+            \param T a template of an object type that has to be serialized
+            \param objectToWrite an object that has to be serialized
+            \param append a bool to append a target file
+         */
         public static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
         {
             TextWriter writer = null;
@@ -681,6 +836,11 @@ namespace RefTag
             }
         }
 
+        //! A method to load information from serialized file
+        /*!
+            \param filePath a string of a target file
+            \param T a template of an object type that is serialized
+         */
         public static T ReadFromJsonFile<T>(string filePath) where T : new()
         {
             TextReader reader = null;
